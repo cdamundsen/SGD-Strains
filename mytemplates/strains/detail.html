@@ -1,0 +1,15 @@
+<h1>{{ the_strain.name }}</h1>
+
+<p>Taxon ID: {{ the_strain.taxonid }}</p> 
+{% if the_strain.pmid %}
+    <p>PMID: {{ the_strain.pmid }}</p>
+{% endif %}
+<p><a href="/strains/{{ the_strain.id }}/contigs/">{{ contig_count }} contigs</a></p>
+<p><a href="/strains/{{ the_strain.id }}/features_by_strain/">{{ feature_count }} features</a></p>
+<p><a href="/strains/{{ the_strain.id }}/strain_cds/">{{ cds_count }} Coding Sequences</a></p>
+<p><a href="/strains/{{ the_strain.id }}/strain_protein/">{{ pep_count }} Protein Sequences</a></p>
+
+<div><a href="/strains/add_contigs/{{ the_strain.id }}">Add Contigs</a></div>
+<div><a href="/strains/add_features/{{ the_strain.id }}">Add Features</a></div>
+<div><a href="/strains/{{ the_strain.id }}/add_CDS/">Add Coding Sequences</a></div>
+<div><a href="/strains/{{ the_strain.id }}/add_protein/">Add Protein Sequences</a></div>

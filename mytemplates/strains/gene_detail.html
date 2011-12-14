@@ -1,0 +1,27 @@
+<h1>{{ the_reference.feature_name }} {% if the_reference.standard_name %} {{ the_reference.standard_name }} {% endif %}</h1>
+<h2>{{ the_reference.feature_type }} {% if the_reference.qualifier %} {{ the_reference.qualifier }} {% endif %}</h2>
+
+<p>{{ the_reference.description }}</p>
+
+<hr>
+<h3>Coding Sequences</h3>
+
+<p><a href="/strains/cds_clustal/{{ the_reference.id }}">Align the coding sequences</a></p>
+
+<pre>
+{% for cds, seq in cds_list %}
+>{{ cds.name }}
+{{ seq }}
+{% endfor %}
+</pre>
+
+<hr>
+<h3>Protein Sequences</h3>
+<p><a href="/strains/protein_clustal/{{ the_reference.id }}">Align the protein sequences</a></p>
+
+<pre>
+{% for pep, pep_seq in protein_list %}
+>{{ pep.name }}
+{{ pep_seq }}
+{% endfor %}
+</pre>

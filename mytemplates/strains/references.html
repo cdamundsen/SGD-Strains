@@ -1,0 +1,30 @@
+<h1>Reference Genes</h1>
+
+<table border="1">
+    <tr>
+        <th>SGDID</th>
+        <th>Feature Type</th>
+        <th>Feature Name</th>
+        <th>Standard Name</th>
+        <th>Aliases</th>
+        <th>Description</th>
+        <th>Strain Versions</th>
+    </tr>
+    {% for reference, strain_count in reference_list %}
+        <tr>
+            <td>{{ reference.sgdid }}</td>
+            <td>{{ reference.feature_type }} {% if reference.qualifier %} {{ reference.qualifier }}  {% endif %}</td>
+            <td>{% if reference.feature_name %} {{ reference.feature_name }}  {% else %} &nbsp; {% endif %}</td>
+            <td>{% if reference.standard_name %} {{ reference.standard_name }}  {% else %} &nbsp; {% endif %}</td>
+            <td>{% if reference.aliases %} {{ reference.aliases }}  {% else %} &nbsp; {% endif %}</td>
+            <td>{% if reference.description %} {{ reference.description }}  {% else %} &nbsp; {% endif %}</td>
+            <td>
+                {% if strain_count %}
+                    <a href="/strains/gene_detail/{{ reference.id }}/">{{ strain_count }}</a>
+                {% else %}
+                    {{ strain_count }}
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+</table>

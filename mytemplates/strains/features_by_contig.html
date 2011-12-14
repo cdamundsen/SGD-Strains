@@ -1,0 +1,39 @@
+<h1>{{ the_strain.name }}</h1>
+<h2>Features on {{ the_contig.name }}</h2>
+
+<table border="1">
+<tr><th>Feature</th><th>Type</th><th>Start Coordinate</th><th>Stop Coordinate</th><th>Strand</th></tr>
+{% for a_feature, child_features in feature_list %}
+    {% if a_feature.feature_id %}
+        <tr>
+            <td>{{ a_feature.feature_id }}</td>
+            <td><a href="/strains/feature_detail/{{ a_feature.id }}/">{{ a_feature.feature_type }}</a></td>
+            <td align="right">{{ a_feature.start_coord }}</td>
+            <td align="right">{{ a_feature.stop_coord }}</td>
+            <td align="center">{{ a_feature.strand }}</td>
+        </tr>
+        {% if child_features %}
+            {% for child_feature, grandchild_features in child_features %}
+                <tr>    
+                    <td> </td>
+                    <td><a href="/strains/feature_detail/{{ child_feature.id }}/">{{ child_feature.feature_type }}</a></td>
+                    <td align="right">{{ child_feature.start_coord }}</td>
+                    <td align="right">{{ child_feature.stop_coord }}</td>
+                    <td align="center">{{ child_feature.strand }}</td>
+                </tr>
+                {% if grandchild_features %}
+                    {% for grandchild_feature, greatgrandchild_features in grandchild_features %}
+                        <tr>    
+                            <td> </td>
+                            <td><a href="/strains/feature_detail/{{ grandchild_feature.id }}/">{{ grandchild_feature.feature_type }}</a></td>
+                            <td align="right">{{ grandchild_feature.start_coord }}</td>
+                            <td align="right">{{ grandchild_feature.stop_coord }}</td>
+                            <td align="center">{{ grandchild_feature.strand }}</td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endif %}
+{% endfor %}
+</table>

@@ -1,0 +1,4 @@
+This repo assumes that you're running MySQL as the database, you have BioPython
+and clustalw2 installed (and clustalw2 can be found on your path). You'll want
+to edit the settings to make the database name, username and password match
+your situation

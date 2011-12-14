@@ -1,0 +1,29 @@
+<h1>Strains</h1>
+
+{% if strain_list %}
+    <div>
+        <table border="1">
+        <tr>
+            <th>Strain</th>
+            <th>Contigs</th>
+            <th>Features</th>
+            <th>Coding Sequences</th>
+            <th>Proteins</th>
+            {% for strain, contig_count, feature_count, cds_count, pep_count in strain_list %}
+                <tr>
+                    <td><a href = "/strains/{{ strain.id }}/">{{ strain.name }}</a></td>
+                    <td align="right"><a href="/strains/{{ strain.id }}/strain_contigs/">{{ contig_count }}</a></td>
+                    <td align="right">{{ feature_count }}</td>
+                    <td align="right"><a href="/strains/{{ strain.id }}/strain_cds/">{{ cds_count }}</a></td>
+                    <td align="right"><a href="/strains/{{ strain.id }}/strain_protein/">{{ pep_count }}</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% else %}
+    <p>No strains in the system</p>
+{% endif %}
+
+<p><a href="/strains/references/">{{ reference_count }} Reference Features</a></p>
+
+<a href="/strains/new_strain">Add A New Strain</a>

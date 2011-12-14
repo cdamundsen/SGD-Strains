@@ -1,0 +1,7 @@
+<h1>Load Coding Sequences for {{ the_strain.name }}</h1>
+
+<form action="/strains/{{ the_strain.id }}/save_CDS/" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div>CDS Fasta File: <input type="file" name="cds_file" /></div>
+    <input type="submit" value="Save CDS" />
+</form>

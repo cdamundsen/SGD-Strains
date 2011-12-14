@@ -1,0 +1,7 @@
+<h1>Load Protein Sequences for {{ the_strain.name }}</h1>
+
+<form action="/strains/{{ the_strain.id }}/save_protein/" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div>Protein Fasta File: <input type="file" name="protein_file" /></div>
+    <input type="submit" value="Save Proteins" />
+</form>

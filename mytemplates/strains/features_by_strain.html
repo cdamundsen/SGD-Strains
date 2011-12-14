@@ -1,0 +1,19 @@
+<h1>Features in {{ the_strain.name }}</h1>
+
+{% for a_contig, features in feature_list %}
+    <h2>{{ a_contig.name }}</h2>
+    <table>
+    <tr><th>Feature</th><th>Type</th><th>Start</th><th>Stop</th><th>Strand</th></tr>
+    {% for a_feature in features %}
+        {% if a_feature.feature_id %}
+            <tr>
+                <td>{{ a_feature.feature_id }}</td>
+                <td>{{ a_feature.feature_type }}</td>
+                <td align="right">{{ a_feature.start_coord }}</td>
+                <td align="right">{{ a_feature.stop_coord }}</td>
+                <td align="center">{{ a_feature.strand }}</td>
+            </tr>
+        {% endif %}
+    {% endfor %}
+    </table>
+{% endfor %}

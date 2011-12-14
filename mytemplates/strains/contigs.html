@@ -1,0 +1,14 @@
+<h1>{{ the_strain.name }} Contigs</h1>
+
+<table border="1">
+<tr><th>Name</th><th>Length (bp)</th><th>Features</th><th>Coding Sequences</th></tr>
+    {% for a_contig, contig_length, feature_count, cds_count in contig_list %}
+        <tr>
+            <td><a href="/strains/contig_detail/{{ a_contig.id }}/">{{ a_contig.name }}</a></td>
+            <td align="right">{{ contig_length }}</td>
+            <td align="right"><a href="/strains/features_by_contig/{{ a_contig.id }}/">{{ feature_count }}</a></td>
+            <td align="right">{{ cds_count }}</td>
+        </tr>
+    {% endfor %}
+</table>
+

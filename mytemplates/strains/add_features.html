@@ -1,0 +1,7 @@
+<h1>Add Features to Strain {{ the_strain.name }}</h1>
+
+<form action="/strains/save_features/{{ the_strain.id }}/" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div>GFF File: <input type="file" name="gff_file" /></div>
+    <input type="submit" value="Save Features" />
+</form>

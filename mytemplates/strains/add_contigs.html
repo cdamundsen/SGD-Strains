@@ -1,0 +1,7 @@
+<h1>Add Contigs to Strain {{ the_strain.name }}</h1>
+
+<form action="/strains/save_contigs/{{ the_strain.id }}/" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div>Fasta File: <input type="file" name="contig_file" /></div>
+    <input type="submit" value="Save Contigs" />
+</form>

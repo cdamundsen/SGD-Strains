@@ -1,0 +1,5 @@
+<h1>{{ the_strain.name }}</h1>
+
+{% for contig_id, contig_seq in contigs %}
+    <p> {{ contig_id }}<br/>{{ contig_seq }}</p>
+{% endfor %}

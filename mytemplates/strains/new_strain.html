@@ -1,0 +1,9 @@
+<h1>New Strain</h1>
+
+<form action="/strains/save_new_strain/" method="post">
+    {% csrf_token %}
+    <div>Name: <input type="text" size="50" maxlength="200" name="strain_name" /></div>
+    <div>Taxon ID: <input type="text" size="10" maxlength="20" name="taxon_id" /></div>
+    <div>Pubmed ID: <input type="text" size="10" maxlength="20" name="pmid" /></div>
+    <input type="submit" value="Save Strain" />
+</form>

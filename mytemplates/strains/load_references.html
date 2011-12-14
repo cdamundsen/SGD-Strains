@@ -1,0 +1,7 @@
+<h1>Load Reference Features</h1>
+
+<form action="/strains/save_references/" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div>SGD_features.tab File: <input type="file" name="features_file" /></div>
+    <input type="submit" value="Save Features" />
+</form>
