@@ -27,4 +27,5 @@ urlpatterns = patterns('',
                        url(r'^(?P<strain_id>\d+)/strain_cds/$',         'strains.views.strain_cds'),
                        url(r'^(?P<strain_id>\d+)/strain_protein/$',     'strains.views.strain_protein'),
                        url(r'^(?P<strain_id>\d+)/strain_contigs/$',     'strains.views.strain_contigs'),
+                       url(r'^(?P<strain_id>\d+)/delete_strain/$',      'strains.views.delete_strain'),
                       )

@@ -1,5 +1,6 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.core.exceptions import ObjectDoesNotExist
 from django.template import Context, loader, RequestContext
 from django.shortcuts import render_to_response, get_object_or_404
 
@@ -281,8 +282,13 @@ def save_features(request, strain_id):
 
         if featureType == 'contig':
             # We need to add this to the contigMap
-            contigName = attributeDict['dbxref'][0].split(':')[-1]
+            try:
+                contigName = attributeDict['dbxref'][0].split(':')[-1]
+            except KeyError:
+                contigName = attributeDict['ID'][0]
             contigMap[seqid] = contigName
+        elif featureType == 'chromosome':
+            contigMap[seqid] = seqid
         else: # This is an actual feature line. It is assumed that we have already gone through all the contig lines
             theContig = get_object_or_404(Contig, name=contigMap[seqid] ) # Get the Contig we're going to point to
             feature = Feature()
@@ -297,6 +303,12 @@ def save_features(request, strain_id):
                     # Yup, it's one we need to link to the Reference table
                     referenceName = feature.feature_id.split("_")[0]
                     feature.reference = Reference.objects.get(feature_name = referenceName)
+                else: # just try and see if there is a reference with this unmodified feature_id
+                    try:
+                        feature.reference = Reference.objects.get(feature_name = feature.feature_id)
+                    except ObjectDoesNotExist:
+                        pass
+
             if 'Parent' in attributeDict:
                 parent = get_object_or_404(Feature, feature_id = attributeDict['Parent'][0], contig = theContig)
                 feature.parent = parent
@@ -536,3 +548,34 @@ def strain_contigs(request, strain_id):
     return render_to_response('strains/fasta.html',
                               { 'things' : thingList })
     ## strain_protein ##
+
+
+def delete_strain(request, strain_id):
+    theStrain = get_object_or_404(Strain, pk = strain_id)
+    proteins = Protein.objects.filter(cds__feature__contig__strain = theStrain)
+    cds = CDS.objects.filter(feature__contig__strain = theStrain)
+    features = Feature.objects.filter(contig__strain = theStrain)
+
+    noParent = features.filter(parent = None)
+
+    # There's probably a better way to do this that allows us to get a QeurySet
+    # rather than turning things into lists. With a QuerySet we can .delete()
+    # the whole set rather than having to delete each item in the list one at a
+    # time.
+    notParent = [x for x in features if x not in noParent]
+    grandchildren = [x for x in notParent if x.parent in notParent]
+    children = [x for x in notParent if x not in grandchildren]
+
+    contigs = Contig.objects.filter(strain = theStrain)
+
+    proteins.delete()
+    cds.delete()
+    for gc in grandchildren:
+        gc.delete()
+    for c in children:
+        c.delete()
+    noParent.delete()
+    contigs.delete()
+    theStrain.delete()
+    return HttpResponseRedirect('/strains/')
+    ## delete_strain ##
