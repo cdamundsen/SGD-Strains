@@ -5,6 +5,8 @@
         <table border="1">
         <tr>
             <th>Strain</th>
+            <th>Taxon ID</th>
+            <th>Pubmed ID</th>
             <th>Contigs</th>
             <th>Features</th>
             <th>Coding Sequences</th>
@@ -12,6 +14,13 @@
             {% for strain, contig_count, feature_count, cds_count, pep_count in strain_list %}
                 <tr>
                     <td><a href = "/strains/{{ strain.id }}/">{{ strain.name }}</a></td>
+                    <td>{{ strain.taxonid }}</td>
+                    <td>{% if strain.pmid %}
+                            <a href="http://www.ncbi.nlm.nih.gov/pubmed?term={{ strain.pmid }}">{{ strain.pmid }}</a>
+                        {% else %}
+                            &nbsp;
+                        {% endif %}
+                    </td>
                     <td align="right"><a href="/strains/{{ strain.id }}/strain_contigs/">{{ contig_count }}</a></td>
                     <td align="right">{{ feature_count }}</td>
                     <td align="right"><a href="/strains/{{ strain.id }}/strain_cds/">{{ cds_count }}</a></td>
